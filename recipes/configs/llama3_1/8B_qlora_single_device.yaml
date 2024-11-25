@@ -28,12 +28,12 @@ model:
 # Tokenizer
 tokenizer:
   _component_: torchtune.models.llama3.llama3_tokenizer
-  path: /tmp/Meta-Llama-3.1-8B-Instruct/original/tokenizer.model
+  path: /data/models/Meta-Llama-3.1-8B-Instruct/original/tokenizer.model
   max_seq_len: null
 
 checkpointer:
   _component_: torchtune.training.FullModelHFCheckpointer
-  checkpoint_dir: /tmp/Meta-Llama-3.1-8B-Instruct/
+  checkpoint_dir: /data/models/Meta-Llama-3.1-8B-Instruct/
   checkpoint_files: [
     model-00001-of-00004.safetensors,
     model-00002-of-00004.safetensors,
@@ -41,15 +41,16 @@ checkpointer:
     model-00004-of-00004.safetensors
   ]
   recipe_checkpoint: null
-  output_dir: /tmp/Meta-Llama-3.1-8B-Instruct/
+  output_dir: /data/models/Meta-Llama-3.1-8B-Instruct/
   model_type: LLAMA3
 resume_from_checkpoint: False
 save_adapter_weights_only: False
 
 # Dataset and Sampler
 dataset:
-  _component_: torchtune.datasets.alpaca_cleaned_dataset
-  packed: False  # True increases speed
+  _component_: torchtune.datasets.instruct_dataset
+  source: csv
+  data_files: /root/project/torchtune/jessee/dataset/Dataset 11-16.csv
 seed: null
 shuffle: True
 batch_size: 2
